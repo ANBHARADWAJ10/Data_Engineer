@@ -1,4 +1,3 @@
-# Variables are used to store data in a program.
 # Varibles are esssential for data manipulation and storage.
 
 name = "Nikhil Bharadwaj" #string variable
