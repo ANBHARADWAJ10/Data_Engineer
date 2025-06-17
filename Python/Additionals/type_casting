@@ -1,0 +1,11 @@
+Type Casting are of two types in python
+
+Implicit and Explicit
+
+Implicit - is nothing but the python itself converts the data into the required datatype according out input or the assigned data
+
+Explicit - We convert the data according to our needs
+
+int() - can be used to convert something into a integer. ( but the value has to be a numerical value).
+float() - can be used to convert something into a float. ( but the value has to be a numerical value).
+str() - can be used to convert anythin into string.
