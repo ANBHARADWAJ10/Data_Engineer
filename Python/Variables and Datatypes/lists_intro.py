@@ -57,3 +57,8 @@ if 2 in data:
 # sort(): Sorts the list in ascending order.
 # reverse(): Reverses the order of the elements in the list.
 # copy(): Returns a shallow copy of the list.
+
+
+#converting a list to a tuple
+data_tuple = tuple(data)  # Convert list to tuple  
+print("Data as tuple:", data_tuple)
