@@ -10,6 +10,8 @@ data = [10, 80, 30, 40, 50, 60, 100, 20, 90, 70]
     
 # print("Largest value in the list is:", largest_value)
 
+
+# adds up all the values in the list and prints the cumulative sum along with the current value
 sum = 0
 
 for value in data:
