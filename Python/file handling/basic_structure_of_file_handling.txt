@@ -1,0 +1,51 @@
+Using Open()
+
+handle = open(filename, mode)
+
+returns a handle use to manipulate the file
+
+filename - string
+mode is optional and should be 
+    - 'r' if we are planning to read the file
+    - 'w' if we are planning to write the file
+
+default mode - read (r)
+
+if the file is does not exist you get an exception error
+    - FileNotFoundError
+
+File handle as a sequence
+
+xfile = open('newFile.txt')
+for data in xfile:
+    print(data)
+
+count lines in the file
+count = 0
+for data in xfile:
+    count += 1
+print(count)
+
+read the whole file but it prints all the lines in a single string.
+
+xfile = open('newFile.txt')
+readfile = xfile.read()
+print(len(readfile)) // takes the length of the characters available in the file.
+print(readfile[:20]) // prints in single line but takes only the first 20 characters
+
+
+print the selected line you want
+
+xfile.seek(0)
+print(xfile.readline().strip()) // readline - reads the line and strip cuts the string from the remaining lines.
+
+line that starts from the word a selected word  (works only if the line starts with it)
+But this prints all the line with the extra spaces 
+
+
+xfile.seek(0)  # reset the file pointer to the beginning
+lines = xfile.readlines()
+for line in lines:
+    if line.startswith('mode'):
+        print('line:', line.strip())
+
