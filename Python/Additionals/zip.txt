@@ -1,0 +1,11 @@
+The built-in zip is useful when you want to put two lists up beside each other and loop over them element by element in pairs.
+
+# Define a list of circle diameters
+diameters = [10, 12, 16, 20, 25]                    
+
+# Compute circle area by list comprehension
+areas = [3.14 * (d/2)**2 for d in diameters]
+
+# Print (diameter, area) pairs
+for d, a in zip(diameters, areas):
+    print(d, a)

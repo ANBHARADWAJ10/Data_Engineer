@@ -1,0 +1,9 @@
+The built-in enumerate is useful when you want to loop over an iterable together with the index of each of its elements:
+
+nums = [1, 2, 3, 4, 5]
+
+#print the index and values at the same time
+
+for idx, num in enumerate(nums):
+    print(idx,num)
+

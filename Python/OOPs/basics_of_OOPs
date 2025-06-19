@@ -43,3 +43,24 @@ to avoid that we have a constructor to do that.
 
 def __str__(self):
     return f"{name} {age}"
+
+__str__ - is a constructor and it helps us to directly print the objects that we created with little changes made.
+
+
+Inheritance:
+    - it allows a child class to acquire properties and methods of parent class.
+    - Single Inheritance - A child class inherits from single parent.
+    - Multiple Inheritance - A child class inherits from more than one parent class.
+    - Multilevel Inheritance - A child class inherits from parent class, which in turn inherits from another class.
+    - Hierarchial Inheritance - A multiple child classes inherit from single parent class.
+    - Hybrid Inheritance - A combination of two or more types of inheritance
+
+
+Polymorphism - 
+    - poly means many - morph means forms
+    - allows methods to have same names but different functionalities.
+
+    - Compile-time polymorphism (Method Overloading)
+        - it allows methods or operators with the same name behave differently based on their input parameters or usage.
+    - Run-time polymorphism (Method Overriding)
+        - it overrides the existing method in the parent class or already defined in the parent class.

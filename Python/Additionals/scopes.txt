@@ -6,3 +6,6 @@ Enclosing scopes - you can take this in consideration if you're writing a nested
                 where the outer fun objects are used in inner function
 
 Global scope - accessible for everyone within the file.
+
+Python files that are meant to be executed directly are called scripts 
+and files that are imported into other files are called modules.
