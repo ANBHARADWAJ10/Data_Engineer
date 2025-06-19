@@ -62,3 +62,22 @@ if 2 in data:
 #converting a list to a tuple
 data_tuple = tuple(data)  # Convert list to tuple  
 print("Data as tuple:", data_tuple)
+
+
+#built-in functions with lists
+print("Length of data:", len(data))  # Length of the list
+print("Max of data:", max(data))  # Maximum value in the list
+print("Min of data:", min(data))  # Minimum value in the list
+# List comprehension
+
+# check if a list is a sublist of another list
+a = [5, 6, 3, 8, 2, 1, 7, 1]
+b = [8, 2, 1] # sublist
+
+# Convert to string representation
+a_str = ','.join(map(str, a))
+b_str = ','.join(map(str, b))
+
+res = a_str.find(b_str) != -1
+
+print(res)

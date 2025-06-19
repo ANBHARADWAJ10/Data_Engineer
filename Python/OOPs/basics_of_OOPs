@@ -1,0 +1,45 @@
+Object Oriented Programming (OOPs)
+    - is a programming paradigm that structures code around objects rather than functions or logic 
+    and it aims to model real world entities.
+
+Oops revolves around these concepts:
+class
+object
+Polymorphism
+Encapsulation
+Inheritance
+Data Abstraction
+
+class - class is blue print which has set of attributes and methods.
+object - is an instance of a class so it can access all the attributes and methods of the class.
+        and the object consists of its state, behavior and identity.
+
+example:
+
+class Dog:
+    species = "canine"
+
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+d1 = Dog('max', 5)
+d2 = Dog('ron', 6)
+
+Here, the we have created an dog object with the help of dog class
+
+Self - this parameter is a reference to the current instance of the class.
+        it allows us to access the attributes and the methods of the object.
+
+__init__ - is a constructor and it is automatically called when an object is created. 
+            it initializes the attributes of the class.
+
+
+so here when we print the object directly like
+
+print(d1) it prints something like this <__main__.Dog object at 0x0000014EAFA16A50>
+
+to avoid that we have a constructor to do that.
+
+def __str__(self):
+    return f"{name} {age}"

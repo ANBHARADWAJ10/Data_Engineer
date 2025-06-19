@@ -1,0 +1,8 @@
+Three types of scopes:
+
+Local scopes - accessible within in the defined scope.
+
+Enclosing scopes - you can take this in consideration if you're writing a nested function or method 
+                where the outer fun objects are used in inner function
+
+Global scope - accessible for everyone within the file.

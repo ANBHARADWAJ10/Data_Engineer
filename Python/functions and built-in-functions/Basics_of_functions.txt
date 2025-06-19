@@ -1,0 +1,17 @@
+Python functions is a block of statement used to run a specific task.
+
+Benifits of using functions:
+1. Increase code readability
+2. Increase code reusability
+
+Basic structure of a function.
+
+def function_name (parameters):
+    # statement
+    return expression
+
+def --> keyword
+function_name --> as the name it the name of the function
+parameters --> the parameter
+# statement --> body of the statement
+return --> returns the function
