@@ -1,0 +1,25 @@
+Plotting with matplotlib
+
+matplotlib is most widely used plotting library.
+
+So, it has to be installed separately before we can import it and use it.
+
+# (Note: This line is not needed when using an editor)   
+
+%matplotlib inline  
+
+Given a list of data for x and y, a line graph can be produced in a single command plt.plot(x,y), while actually showing the plot has its own command.
+
+It might seem wierd that the plt.show() is needed,
+ but it is not always desired to have the plot shown.
+  Sometimes it is desired to produce the graph and have it saved to a png-file or do something else with it instead of showing it. For more complex plots there might be many different plotting commands to build the plot
+, but only a single showing command is needed at the end.
+
+Customization of graphs
+
+The plot of 
+ from above can be made much nicer by a little customization. 
+ f(x) = x**2
+ The command names should make the code self-explanatory.
+
+ 

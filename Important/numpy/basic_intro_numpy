@@ -1,0 +1,142 @@
+NUMPY - NUMERICAL PYTHON
+
+Array module in python only supports 1D - Array 
+That's where 'numpy' comes in.
+
+The reason to use array even after having list and all cause:
+Array only stores homogenous data which means stores only same type of data. 
+where list can have multiple types of data in it. (eg. int, str, bool)
+
+how to use an array
+
+import array
+
+int
+signed int - i
+unsigned int - I
+
+long - l | L (unsigned)
+
+float - f | d (double)
+
+char - b | B (unsigned)
+
+unicode string - w 
+
+array('i', [1,2,3,4,5])
+
+
+# Numpy - is multi dimensional array
+
+# numpy - fixed type ( int32 ) - fast - no type checking - contiguous memory
+# lists - is not ( converts into object type or object value, reference object) - which takes a lots of space and requires more time and makes it slow
+
+ <!-- 
+ Applications of numpy:
+ Mathematics
+ Plotting
+ Backend (Pandas, Connect 4, Digital photography (in the form of png))
+ Machine Learning 
+ -->
+
+
+import numpy as np
+
+a = np.array([1,2,3])
+
+# to find the dimensions of the array 
+# use the below command:
+
+a.ndim
+
+# output 1
+
+# prints the dimensions that are used by the array
+
+b = np.array([1,2,3],[4,5,6])
+
+# Get dimensions
+b.ndim 
+
+# output 2
+
+# Get type
+a.dtype
+
+# Get Shape
+b.shape 
+
+# for the above it (2,3) - it has 2 rows and 3 columns
+
+# we can assign the dtype to the array it self if we wanna reduce it's byte size
+
+a = np.array([1,2,3], dtype = 'int16')
+
+# Get itemsize - gets byte size
+a.itemsize
+
+# Get total size
+a.nbytes
+
+
+# STRUCTURE OF NUMPY
+
+Shape : (depth, rows, columns)
+
+(2,3,4) - 2 matrices of 3 rows and 4 columns
+
+np.zeros((2, 3, 4))
+
+np.ones((2, 3, 4))
+
+np.random.randint((2, 3, 4))
+
+np.random.randint(5,7, size(3,3)) --> print a matrix where the range is between 5 - 7 and it should have 3 rows and 3 columns
+
+# identity matrix
+np.identity(value)
+
+arr = np.array([[1, 2, 3]])
+# i want to print the same in the same again
+
+r1 = np.repeat(arr, 3, axis = 0) makes the matrix in vertical way axis = 1 makes it horizontal
+
+# np.linalg.det() is a NumPy function that computes the determinant of a square matrix. The determinant is a scalar value that can be calculated from the elements of a square matrix and is useful in linear algebra for solving systems of equations, finding inverses, and more.
+
+import numpy as np
+
+A = np.array([[1, 2], [3, 4]])
+det = np.linalg.det(A)
+print(det)  # Output: -2.0
+
+# Note: The input must be a square matrix (same number of rows and columns).
+
+
+# Reference = https://docs.scipy.org/doc/numpy/reference/routines.linalg.html
+
+# Determinent
+# Trace
+# Singular Vector Decomposition
+# Eigenvalues
+# Matrix Norm
+# Inverse etc..
+
+# axis
+axis=0: Operate down the rows (column-wise). goes in the direction on row
+axis=1: Operate across the columns (row-wise). goes in the direction of column
+
+# reorganizing the arrays
+
+You can reorganize the arrays into any with the help of reshape() function
+
+variable.reshape(2,2)
+
+# Vertically stacking the vectors
+
+v1 = np.array([1,2,3,4])
+v2 = np.array([5,6,7,8])
+
+np.vstack([v1,v2])
+
+# works only if the both has same rows and columns or else we get a value error.
+
