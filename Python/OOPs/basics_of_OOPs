@@ -41,6 +41,9 @@ print(d1) it prints something like this <__main__.Dog object at 0x0000014EAFA16A
 
 to avoid that we have a constructor to do that.
 
+MRO - Method Resolution order
+so even if there are 2 parents it takes the order from left to right.
+
 def __str__(self):
     return f"{name} {age}"
 
@@ -52,7 +55,7 @@ Inheritance:
     - Single Inheritance - A child class inherits from single parent.
     - Multiple Inheritance - A child class inherits from more than one parent class.
     - Multilevel Inheritance - A child class inherits from parent class, which in turn inherits from another class.
-    - Hierarchial Inheritance - A multiple child classes inherit from single parent class.
+    - Hierarchical Inheritance - A multiple child classes inherit from single parent class.
     - Hybrid Inheritance - A combination of two or more types of inheritance
 
 
@@ -64,3 +67,7 @@ Polymorphism -
         - it allows methods or operators with the same name behave differently based on their input parameters or usage.
     - Run-time polymorphism (Method Overriding)
         - it overrides the existing method in the parent class or already defined in the parent class.
+    - Duck Typing
+        -  in Python refers to the concept where the type or class of an object is less important than the methods
+            and/or attributes it possesses
+    - Operator Overloading
