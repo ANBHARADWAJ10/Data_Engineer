@@ -71,3 +71,26 @@ Polymorphism -
         -  in Python refers to the concept where the type or class of an object is less important than the methods
             and/or attributes it possesses
     - Operator Overloading
+
+Abstract Methods -
+    - Abstract methods are kind of methods where they've only declaration but not a definition.
+    - A class which has abstract methods are called Abstract Classes.
+    - inorder to use abstract method or make a class abstract we have to import abc
+        - from abc import ABC, abstractmethod
+        - ABC ( ABSTRACT BASE CLASSES )
+    - we mention a decorator saying this is an abstract class
+        - @abstractmethod
+    - if you inherit that class in an other and there's only declaration then it's also considered as abstract class
+    - NOTE: to avoid the second class to be an abstract class or a abstract method define it by adding a method to it.
+    - EX:
+        from abc import ABC, abstractmethod
+
+        class Computer(ABC): # here the ABC is added and this becomes subclass of ABC and becomes an abstract class.
+            @abstractmethod # decorator to indicate that it is an abstract class.
+            def process(self):
+                pass # do nothing or nothing is here
+
+        class Laptop(Computer):
+            def process(self):
+                print("it's running")
+        

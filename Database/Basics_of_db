@@ -1,0 +1,61 @@
+Data Base:
+    - Collection of data stored in a place is called Data Base.
+
+Data Base Management System (DBMS):
+    - A software that helps users to create and maintain a database.
+CRUD:
+    - Create Read/Retrieve Update and Delete data 
+
+Two Types of DataBases:
+Relational Database:
+    - SQL
+    - Storing and Organising the data in the form of tables.
+    - Each table has column and rows.
+    - Unique key identifiers for each row.
+
+Non Relational Database:
+    - NoSql / not just SQL
+    - storing and Organising data into anything but a tradional table
+    - Key value store
+    - Documents (JSON. etc)
+    - Graphs
+    - Flexible tables
+
+Inorder to maintain these data of relational data base we have:
+    - Relational DataBase Management System
+        - mySql, Oracle, postgreSQL, etc.
+
+Structered Query Language(SQL):
+    - a language to interact with rdbms
+    - used to perform C.R.U.D operaions
+    - sql code used in one RDBMS cannot be used in another without modification.
+
+Primary Key:
+    - a key which Uniquely identifies each row.
+    - which has no mapping to the real world
+Natural Key:
+    - a key which has mapping to the real world - ssn
+Foreign Key:
+    - a foreign key is just a primary key of another table
+    - where the foreign key acts as a bridge to connect the two tables
+    - it allows us to link different relationships
+Composite Key:
+    - a primary consists of two columns
+    - a key where it needs two attributes
+    - sometimes there's a probability of creating two primary keys with two foreign keys.
+        inorder to connect and maintain the relationship with the tables and to help with the data.
+
+SQL BASICS:
+    - Sql is basically a hybrid language, it has 4 types in it.
+    - Data Query Language (DQL):
+        - Used to query the database for information.
+        - Get information that is already stored there.
+    - Data Definition Language (DDL):
+        - Used for defining database schemas.
+    - Data Control Language (DCL):
+        - Used for controlling access to the data in the database.
+        - User & permissions Management.
+    - Data Manipulation Language (DML):
+        - Used for inserting, updating and deleting data from the DB.
+Query:
+    - is a set of instructions given to RDBMS.
