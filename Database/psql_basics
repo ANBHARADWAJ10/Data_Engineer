@@ -1,0 +1,354 @@
+postgreSQL --> semicolon is compulsory;
+
+list the database:
+    -> SELECT datname FROM pg_database;
+
+    or
+
+    -> \l
+
+
+create a database:
+    - CREATE DATABASE name_of_the_database;
+
+Connect to database:
+
+    psql -h <hostname> -p <port_number> -U <username> <database_name>
+
+    ex:
+        psql -h localhost -p 5432 -U anb test
+
+    use this when there is already a connection is made
+    
+    \c <db_name> -> switch between data_bases.
+    
+    ex:
+        \c test
+
+A very Dangerous Command:
+    - DROP DATABASE <db_name>;
+
+
+
+CRUD OPERATIONS:
+
+C - Create
+R - Read
+U - Update
+D - Delete
+
+
+Creating a table:
+
+    CREATE TABLE <name>(
+        id INT,
+        name VARCHAR(100),
+        city VARCHAR(100)
+    );
+
+    Command to see the tables:
+    \d -> displays the total table list
+
+    too deep --> \d <tablename>
+
+Insert data into the table:
+
+    INSERT INTO <tableName>(attributes)
+    VALUES (attributes);
+    ex:
+        INSERT INTO person(id, name, city)
+        VALUES (101, 'Raju', 'Delhi');
+
+    Another way to do it:
+    This works when you're providing all the values:
+        
+        INSERT INTO person VALUES (101, 'Raju', 'Delhi');
+
+Reading Data:
+
+    To get everything from the table:
+        SELECT * FROM <tableName>;
+    
+    To get selective data from the table:
+        SELECT <heading> <tableName>;
+    
+    To read multiple columns:
+        SELECT <heading_Column>, <heading_Column> <tableName>;
+    
+    ex: SELECT * FROM person;
+        SELECT name FROM person;
+        SELECT name, city FROM person;
+
+Updating the Data in a table:
+
+    UPDATE <tableName>
+        SET <Newdata>
+        WHERE <location>
+
+    Ex:
+        UPDATE person
+        SET city='London'
+        WHERE id=2;
+
+        UPDATE person SET city='Hyderabad' WHERE id=101
+
+Delete data from table:
+    DELETE FROM <tableName>
+    WHERE <condition>
+
+    Ex:
+        DELETE FROM person
+        WHERE id=104
+
+
+DataTypes:
+
+    -> Numeric - INT DOUBLE FLOAT DECIMAL
+    -> String  - VARCHAR
+    -> Date    - DATE
+    -> Boolean - BOOLEAN
+
+
+Constraint
+    - Primary Key
+        -- Unique Value.
+
+        -> CREATE TABLE person(
+            id INT PRIMARY KEY,
+            name VARCHAR(100) NOT NULL
+        );
+
+    - NOT NULL
+        -- Null values are not allowed.
+
+        -> CREATE TABLE person(
+            id INT NOT NULL,
+            name VARCHAR(100) NOT NULL
+        );
+
+    - Default
+        -- setting a default value for all
+
+        -> CREATE TABLE customers(
+            id INT PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            acc_type VARCHAR(50) NOT NULL DEFAULT 'Savings'
+        );
+
+    - Serial
+        -- Auto Increment
+        -> CREATE TABLE person(
+            id SERIAL PRIMARY KEY,
+            firstname VARCHAR(50),
+            lastname VARCHAR(50)
+        );
+    - Unique
+        -- keep a data unique
+
+Error Resolving Scenario:
+
+    - if you have created a table and provided serial for the automatic increment then it takes care of it so don't enter any data for it.
+    - if you have entered the data you will get an error while entering new data.
+    - for the we have to check current value whether it matches or not and the if it doesn't then change the value.
+
+    - SELECT currval('name_of the id');
+
+    - SELECT setval('name_of the id');
+
+
+DATA REFINING:
+
+    Clause: - Adding conditions: 
+        - Where
+        - Distinct
+        - Order By
+        - Limit
+        - Like
+
+    -With logical operators:
+        -> SELECT * FROM employees WHERE salary>50000 AND dept='IT';
+        -> AND
+        -> OR
+        -> IN
+        -> NOT IN
+        -> BETWEEN
+            - SELECT * FROM employees WHERE BETWEEN 45000 AND 50000
+
+    --- OPERATORS:
+            - <  -> less than
+            - >  -> greater than
+            - <= -> less than or equal to
+            - >= -> greater than or equal to
+            - != -> Not equal to  
+
+    DISTINCT
+            -> to find the all the unique values that are actually available in it.
+            -> SELECT DISTINCT dept FROM employees;
+                -> it lists all the departments that are available.
+        
+    ORDER BY
+        - Ascending order
+            -> places everything in ascending order according to the column
+
+            -> SELECT * FROM employees ORDER BY firstname;
+        - Descending order
+            -> you have to add DESC at the ending
+
+            -> SELECT * FROM employees ORDER BY firstname DESC;
+    LIMIT
+        -> when you wanna print only till what we want from teh table.
+        
+        -> SELECT * FROM employees LIMIT 3;
+            - prints the first three rows of the table.
+
+        DESCENDING ORDER
+            -> SELECT * FROM employees ORDER BY emp_id DESC LIMIT 4;    
+
+    LIKE - CASE SENSITIVE
+        -> prints the values that are likely to start with the pattern.
+        
+        starts
+        -> if the pattern has to work from the front 
+            -> ex: LIKE 'A%'
+            -> SELECT * FROM employees WHERE firstname LIKE 'A%';
+
+        ends
+        -> if the pattern has to work from the ending
+            -> ex: LIKE '%a' 
+            -> SELECT * FROM employees WHERE firstname LIKE '%a';
+
+        contains
+        -> if the pattern can be found anywhere
+            -> ex: LIKE '%i%'
+            -> SELECT * FROM employees WHERE firstname LIKE '%i%';
+
+        second character
+        -> if the pattern starts from second character
+            -> ex: LIKE '_A%'
+            -> SELECT * FROM employees WHERE firstname LIKE '_A%';
+
+        characters
+        -> if you want the data according to the characters available
+            -> two characters
+            -> ex: LIKE '__'
+            -> 3 characters
+            -> ex: LIKE '___'
+
+
+    ILIKE - Case insensitive
+        -> ex: ILIKE '%john%'
+
+
+Aggregate Functions:
+    - COUNT
+    - SUM
+    - AVG
+    - MIN
+    - MAX
+
+    COUNT:
+        - total count
+        - make sure you select a primary key for accurate results.
+        - ex: SELECT COUNT(emp_id) FROM employees;
+    
+    SUM:
+        - adds all the numbers in a column
+        - SELECT SUM(salary) FROM employees;
+
+    AVG:
+        - Average of the all the numbers in a column
+        - SELECT AVG(salary) FROM employees;
+
+    MIN:
+        - Find the min value in the column
+        - SELECT MIN(salary) FROM employees;
+    
+    MAX:
+        - Find the maximum value in the column
+        - SELECT MAX(salary) FROM employees;
+
+    ROUND:
+        - to print the values after . according to our need when
+            the digit is a decimal
+        - SELECT ROUND(AVG(salary),2) FROM employees;
+        
+    CAST:
+        - it is used to change the underlying value and casts it into 
+            the decimal.
+        - SELECT CAST(AVG(salary) AS DECIMAL(10,2)) AS average_salary
+            FROM employees;
+
+GROUP BY:
+    - The GROUP BY clause in SQL is used to group rows that have the same value in one or more columns into summary rows, often alongside aggregate functions like COUNT(), SUM(), AVG(), MIN(), or MAX(). 
+
+    - SELECT dept FROM employees GROUP BY dept;
+            dept
+            -----------
+            Marketing
+            Finance
+            IT
+            HR
+    - SELECT dept, COUNT(emp_id) FROM employeees GROUP BY dept;
+            dept      | count
+            ----------+-------
+            Marketing |     2
+            Finance   |     2
+            IT        |     6
+            HR        |     2
+
+String Functions:
+    - built-in tools that allow you to manipulate and work with text data within your database queries.
+
+    - CONCAT, CONCAT_WS
+    - SUBSTR
+    - LEFT, RIGHT
+    - LENGTH
+    - UPPER, LOWER
+    - TRIM, LTRIM, RTRIM
+    - REPLACE
+    - POSITION
+    - STRING_AGG
+
+    - CONCAT
+        - SELECT CONCAT(firstname, lastname) FROM employees;
+    - CONCAT_WS
+        - acts as seperator
+        - SELECT CONCAT_WS(' ', firstname, lastname) FROM employees;
+    
+    -SUBSTR
+        - bring out the substring
+        - SELECT SUBSTR('Hello World' , 1,6);
+
+    - REPLACE
+        - REPLACE(str, from_str, to_str)
+        - REPLACE('Hey Buddy', 'Hey', 'Hello');
+        - SELECT REPLACE(dept, 'IT', 'TECH') FROM employees;
+    
+    - REVERSE
+        - SELECT REVERSE('HELLO');
+
+    - LENGTH
+        - SELECT LENGTH(firstname) FROM employees;
+        - SELECT * FROM employees WHERE LENGTH(firstname) > 5;
+    
+    UPPER
+        - SELECT UPPER(firstname) FROM employees;
+
+    LOWER
+        - SELECT LOWER(firstname) FROM employees;
+
+    LEFT 
+        - prints the characters from left
+        - SELECT LEFT('HELLO WORLD', 3);
+    
+    RIGHT
+        - prints the characters from right
+        - SELECT RIGHT('HELLO WORLD', 3);
+    
+    TRIM
+        - trims the extra spaces and prints the data
+        - SELECT TRIM('  Nikhil  ');
+    
+    POSITION
+        - prints the postion number of the word mentioned in the data.
+        - SELECT POSITION('om' in 'Thomas');
