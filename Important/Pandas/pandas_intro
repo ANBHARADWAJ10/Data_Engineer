@@ -1,0 +1,330 @@
+Pandas
+    -is a tabular form of data and it used for data manipulation and analysis.
+
+rows -- known as samples
+
+
+Why Pandas:
+    Import data sets - csv, excel, etc.
+    Data cleaning - missing value & invalid values
+    size mutability
+    Reshaping and pivoting of datasets
+    Efficient manipulation and extraction
+    Statistical analysis
+
+Prerequisites:
+    Programming language
+    Math - statistics
+
+2 Primary DS:
+    Series - 1D
+    DataFrame - 2D (N dimensional)
+
+Series:
+    A one-Dimensional labeled homogeneous array, size immutable.
+    So if i perform remove function in series it basically creates a new string
+    instead of editing the existing array.
+
+DataFrame:
+    A two-Dimensional labeled size-mutable tabular structure with
+    heterogeneous typed columns.
+
+import pandas as pd
+
+Series:
+    s = pd.Series([enter the data here])
+
+    Data type:
+        s.dtype
+
+    Values:
+        s.values
+
+    Index:
+        s.index
+        RangeIndex(start, stop, step)
+
+    Indexing:
+        To find multiple selected values then we have to use [[]] double brackets.
+
+        s[0] -> prints the values in that index.
+
+        s[0:3] -> prints till the stop value and it prints till the index
+                    but not the index.
+                -> start: stop: step value (values to jump)
+        iloc -> location based indexing - it only  works with numbers as indexes.
+
+            s.iloc[3]
+
+            for multiple values:
+                -> s.iloc[[2,3,4]]
+
+        loc -> label based indexing - starting and ending index are included.
+            s.loc['grapes']
+
+        s[[0,2,3]] - you can still use this to access multiple values but it is depreciated so the better way to do is
+        using iloc.
+
+        s.iloc[[0,2,3]]
+
+Create a Series using Dictionary:
+    fruit_protein = {
+    "Avocado": 2.0,       # grams of protein
+    "Guava": 2.6,
+    "Blackberries": 2.0,
+    "Oranges": 0.9,
+    "Banana": 1.1,
+    "Apples": 0.3,
+    "Kiwi": 1.1,
+    "Pomegranate": 1.7,
+    "Mango": 0.8,
+    "Cherries": 1.0
+    }
+
+    To convert this into a series all you have to do is make this into a series
+
+    s2 = pd.Series(fruit_protein, name = 'protein')
+                --> now it is a series
+
+    I wanna know which fruit has values greater than 1
+
+    s2 > 1
+        -> this return the answer in the form of boolean if s2>1 - True or False
+
+    I want the values that are greater than 1 now:
+
+    s2[s2 > 1]
+        -> Now using the previous expression and converting it as Conditional Index.
+
+Logical Operators:
+    and, or, not --> &, |, ~(epsilon)
+
+    i want to know the values where greater than 1 and less than 2
+
+    (s2 > 1) & (s2 < 2)
+        -> Boolean answer True or False
+
+    I want to find the values where greater than 1 and less than 2
+
+    s2[(s2>1) & (s2<2)]
+        -> returns the values as it has now changed into an logical index
+
+    s2[~(s2>1)] --> not greater than 1
+
+Modifying the series:
+    s2['Mango'] = 2.8
+        -> you can modify the values by changing the existing values.
+
+    index can also be changed but we have pass the entire index again a tedious task
+
+
+DataFrames:
+    - 2d array so we can assign multiple columns
+
+    import numpy as np
+
+    np.nan --> means NaN value it resembles an empty data
+
+    # DataFrame:
+
+        data = {
+            "Name": ["Alice", "Bob", "Charlie", "David", "Eve", "Alice"],
+            "Age": [25, 30, 35, np.nan, 29, 25],
+            "Department": ["HR", "IT", "Finance", "IT", "HR", "HR"],
+            "Salary": [50000, 60000, 70000, 62000, np.nan, 50000]
+        }
+
+        convert this dictionary data into dataframe
+
+        df = pd.DataFrame(data)
+        print(df)
+
+        First rows:
+            df.head() -- we can enter the values inbetween
+        last rows:
+            df.tail() -- default 5
+
+        Indexing:
+            df.iloc[2:4] # location based indexing
+
+            df.loc[2:4, ['Age', 'Department']] # label based indexing
+                -- This prints only age and department from the selected  rows.
+
+        Best practice is to use iloc and loc
+
+        drop:
+            so if we don't want a column then we can drop command to remove
+
+            df.drop('Age', axis=1, inplace = True) --> axis = 1 --> for removing whole column
+                                                   --> axis = 0 --> for removing a row
+                                                   --> inplace is used to tell the python to make the changes in the original data.
+        shape:
+            df.shape
+
+        info:
+            df.info()
+                --> displays the class, datatype, memory usage, count of non-null values.
+        describe:
+            df.describe()
+                --> performs
+                    --> count, mean, standard value (std), min, 25%, 50%, 75%, max
+
+        Broadcasting:
+            df['salary'] = df['salary'] + 5000
+             --> it increases the salary by 5000 to every column that is available
+
+        Renaming Columns:
+            df.rename(columns = {'Department':'Dept'}, inplace = True)
+
+        Unique:
+            Check unique values for particular data:
+
+            df['salary'].unique()
+
+        Value counts:
+            for example if a column has 4 departments and we wanna know how many people are in each department
+
+            df['Dept'].value_counts()
+
+        Create a new Column:
+            df['promoted salary'] = df['Salary'] * 10
+
+Data Cleaning:
+
+    Missing Values:
+
+    missing values or null values are removed
+
+    To check how many null values are in the data.
+
+    df.isnull().sum()
+
+    To drop null values
+
+    df.dropna() --> drops all the rows that has null values.
+
+    and we have inplace = True so original data is untouched.
+
+    df.dropna(how = 'any') --> drops any rows that has null values.
+
+    df.dropna(how = 'all') --> if all the values in any row are null then it drops the row.
+
+    fill the age that has null values in it by using mean
+
+    df['Age'].fillna(df['Age'].mean())
+
+    df['Age'].fillna(27) i have to mention the value that i wanna add to the null value inbetween the brackets.
+
+    df.fillna(0) --> fills all the values with the same number ex: 0
+
+    Forward fill and Backward fill
+
+    forward fill --> it replaces the null values with the top adjacent value.
+
+        --> df['Age'].fillna(method = 'ffill')
+
+    backward fill --> it replaces the null values with the bottom adjacent value.
+
+        --> df['Age'].fillna(method = 'bfill')
+
+        it might give us an error when the adjacent values are also null
+        so it remains null at all the parts.
+
+        in the above case it better to use mean or median or mode.
+
+    Replace strings in the column:
+
+        --> df['Name'].replace('Charlie', 'Rose')
+
+        now you want the change the data in the original data.
+
+        --> df['Name'] =  df['Name'].replace('Charlie', 'Rose')
+
+    Duplicate Values:
+
+        df_dup = df[df.duplicated()]
+        df_dup
+
+        ex: Italy, london, India, Italy
+
+        we have Italy - Unique
+                london - Unique
+                India - Unique
+                Italy - Duplicate (cause it already exists)
+
+        df_dup = df[df.duplicated()] as defualt it takes last element as duplicate
+
+        if we want first element to be duplciate
+
+        df[df.duplicated(keep = 'last') keep = 'last' --> basically removes the last element from the duplicate list
+
+        keep = 'last' --> first is duplicate
+        keep = 'first' --> last is duplciate
+
+        drop duplicates:
+
+            df = df.drop_duplicates()
+
+    Invalid Values:
+
+    using lambda and apply functions.
+
+    df['promoted salary'] = df['promoted salary'].apply(lambda x: x/10 if x > 650000 else x)
+
+    Split a String:
+
+    name = 'Allisson_Burgers'
+    df[['firstname', 'lastname']] = df['name'].str.split(_)
+
+Joins and Merges:
+
+    Joins
+        -> left join -- only the properties of left (a)
+        -> right join -- only the properties of right (b)
+        -> outer join -- everything of a and b
+        -> inner join -- only the common properties between a and b
+
+    Merge
+        -> creates a new dataframe leaving the original untouched.
+        -> combines two or more df based on common column or indexes
+
+    # concat
+
+    pd.concat([df, df2]) --> to combine two dataframes.
+
+    # merge
+
+    pd.merge(df, df2, on = 'Dept')
+        --> here we place the common column for the both and then combine those.
+
+
+    convert to date format
+        -- object to date
+
+        df['data_column'] = pd.to_datetime(df['date_column'])
+
+
+Import Export Data:
+    pd.read_csv(filename)
+    pd.read_excel(filename)
+    pd.read_table(filename)
+    pd.DataFrame(dict)
+    pd.to_csv(filename)
+    pd.to_excel(filename)
+    df.to_sql(table_nm, connection_obj)
+    df.to_json(filename)
+
+Inspect Data:
+    df.head() # first values
+    df.tail() # last values
+    df.sample() # random values
+    df.info() # summary of data frame
+    df.describe # summary statistics for numerical values
+    df.dtypes # check datatypes of the columns
+    df.columns # list column names
+    df.index # display the index range
+
+Select Index Data:
+    df['column'] # select a single column
+    df[['col1', 'col2']] # select multiple columns
+

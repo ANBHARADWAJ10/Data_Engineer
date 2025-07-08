@@ -352,3 +352,50 @@ String Functions:
     POSITION
         - prints the postion number of the word mentioned in the data.
         - SELECT POSITION('om' in 'Thomas');
+
+ALTER TABLES:
+    - is used to alter the data by adding new column or manipulating the column
+
+    Add a new column:
+        - ALTER TABLE table_name
+          ADD COLUMN column_name data_type;
+
+        EX: ALTER TABLE employees
+            ADD COLUMN age INT;
+    Remove a Column:
+        - ALTER TABLE table_name
+          DROP COLUMN column_name;
+
+        EX: ALTER TABLE employees
+            DROP COLUMN age;
+
+    Rename a column or table name:
+        COLUMN:-
+            - ALTER TABLE table_name
+              RENAME COLUMN old_column_name TO new_column_name
+
+            EX: ALTER TABLE employees
+                RENAME COLUMN lastname TO surname;
+
+        TABLE:-
+            - ALTER TABLE contacts
+              RENAME TO mycontacts;
+
+            or
+
+            - RENAME TABLE contacts TO mycontacts;
+
+    How to modify a column:
+        modify the data type:
+            - ALTER TABLE table_name
+              ALTER COLUMN column_name
+              SET DATA TYPE you_can_choose_the_type;
+
+            - ALTER TABLE person
+              ALTER COLUMN fname
+              SET DATA TYPE VARCHAR(200);
+        modify the data type by adding a default value:
+            - ALTER TABLE person
+              ALTER COLUMN fname
+              SET DEFAULT 'unknown';
+

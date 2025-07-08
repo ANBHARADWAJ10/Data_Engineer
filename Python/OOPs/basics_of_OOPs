@@ -94,3 +94,16 @@ Abstract Methods -
             def process(self):
                 print("it's running")
         
+| Concept           | When to Use                                             | Why It Helps                              |
+| ----------------- | ------------------------------------------------------- | ----------------------------------------- |
+| **Class/Object**  | To model real-world things                              | Organizes your code around real concepts  |
+| **Inheritance**   | When a class is a specialized version of another        | Avoids code duplication                   |
+| **Polymorphism**  | When you want same method names for different behaviors | Makes code flexible and reusable          |
+| **Encapsulation** | When you want to restrict access to internal data       | Prevents unintended changes to data       |
+| **Abstraction**   | When you want to define a common interface              | Focuses on what needs to be done, not how |
+
+class - is a blue print
+object - is an instance of a class
+inheritance - child class inherits the parent class or you can say specialized version of a class.
+polymorphism - same functions but different functionalities
+encapsulation - it restricts access to internal data

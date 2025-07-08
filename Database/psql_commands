@@ -1,0 +1,32 @@
+default - db in posgresql:
+    -> psql -U postgres -p 5432 -h localhost postgres
+
+\copyright - for distribution terms
+\h         - for help with sql commands
+\?         - for help with psql commands
+\g         - or terminate with semicolon to execute query
+\q         - quit
+
+IMPORTANT -> psql --help
+
+\! cls - to clear screen
+\! clear - to clear screen
+
+\l - list of databases
+
+Connection Options:
+-h -> --host=HOSTNAME
+-p -> --post=PORT
+-U -> --username=USERNAME
+-w -> --no-password
+-W -> --password
+
+-c -> to connect to the database
+
+
+to connect in windows powershell
+We have to use
+    -> psql -U postgres -h localhost
+
+
+
