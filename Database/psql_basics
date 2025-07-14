@@ -7,6 +7,9 @@ list the database:
 
     -> \l
 
+list the template of the table:
+
+    -> \d tablename;
 
 create a database:
     - CREATE DATABASE name_of_the_database;
@@ -100,6 +103,11 @@ Delete data from table:
         DELETE FROM person
         WHERE id=104
 
+DROP:
+    DROP <table_name>
+    DROP <db>
+    DROP <Function>
+    DROP <Procedure>
 
 DataTypes:
 
@@ -153,7 +161,7 @@ Error Resolving Scenario:
 
     - SELECT currval('name_of the id');
 
-    - SELECT setval('name_of the id');
+    - SELECT setval('name_of the id', <write the value here>);
 
 
 DATA REFINING:
@@ -314,6 +322,9 @@ String Functions:
     - CONCAT_WS
         - acts as seperator
         - SELECT CONCAT_WS(' ', firstname, lastname) FROM employees;
+
+        - I can assign names to it
+        - SELECT CONCAT_WS(' ', firstname, lastname) AS Fullnames FROM employees;
     
     -SUBSTR
         - bring out the substring
@@ -360,11 +371,17 @@ ALTER TABLES:
         - ALTER TABLE table_name
           ADD COLUMN column_name data_type;
 
+        - ALTER TABLE table_name
+          ADD COLUMN column_name data_type DEFAULT value;
+
         EX: ALTER TABLE employees
             ADD COLUMN age INT;
     Remove a Column:
         - ALTER TABLE table_name
           DROP COLUMN column_name;
+
+        - ALTER TABLE table_name
+          DROP column_name;
 
         EX: ALTER TABLE employees
             DROP COLUMN age;
@@ -399,3 +416,617 @@ ALTER TABLES:
               ALTER COLUMN fname
               SET DEFAULT 'unknown';
 
+        Add new data to the newly created column
+            - UPDATE tablename
+              SET newcolumn = col01 ||' '|| col02;
+
+            - Here, the col01 and col02 are existing columns
+            - || || - used for concatination ' ' - resembles space
+
+            - UPDATE employees
+              SET fullname = firstname ||' '|| lastname;
+
+        Remove column from a table
+            - ALTER TABLE table_name
+              DROP COLUMN column_name;
+
+            - ALTER TABLE employees
+              DROP COLUMN fullname;
+
+        CHECK CONSTRAINT:
+            - For example we want to make sure the phone no is atleast
+                10 digits ( indian scenario )
+            - Then we can use CHECK CONSTRAINT.
+
+            - CHECK (write the condition here);
+
+            - EX:
+                 ALTER TABLE employees
+                 ADD COLUMN mob VARCHAR(15) CHECK (LENGTH(mob) >= 10);
+
+            - So if we add the data using UPDATE and it is equal to 10
+                or greater than 10 we get no errors
+              EX:
+                 UPDATE employees
+                 SET mob = '7036681965'
+                 WHERE firstname = 'Nikhil';
+
+            - The above code works it matches our constraint.
+
+              EX:
+                 UPDATE employees
+                 SET mob = '1233434'
+                 WHERE firstname = 'Siva';
+
+            - Here we get an error telling us that violates the constraint.
+
+        Add Constraints to the existing column in the table:
+            - first we have to check the constraint name by typing the below:
+
+            - \d table_name
+                - you can see the constraints and copy or remember the constraint
+
+            - ALTER TABLE table_name
+              DROP CONSTRAINT constraint_name;
+
+            - ALTER TABLE employees
+              DROP CONSTRAINT employees_mob_check;
+
+
+        Add Constraint name to column for readability:
+
+            - CONSTRAINT constraint_name CHECK (condition);
+
+            - ALTER TABLE employees
+              ADD COLUMN mob VARCHAR(15)
+              CONSTRAINT mob_no_less_than_10_digits
+              CHECK (LENGTH(mob) >= 10);
+
+            - ALTER TABLE employees
+              ADD CONSTRAINT unique_mail_is_needed
+              UNIQUE (email);
+
+        DIFFERENT TYPES OF CONSTRAINTS:
+            - NOT NULL
+            - CHECK
+            - UNIQUE
+            - FOREIGN KEY
+
+        Expression Case: (similar to conditional statements)
+            - SELECT firstname, salary,
+              CASE
+                  WHEN salary >= 50000 THEN 'HIGH'
+                  ELSE 'LOW'
+              END AS sal_cat
+              FROM employees;
+
+            - SELECT firstname, salary,
+              CASE
+                  WHEN salary >= 50000 THEN 'High'
+                  WHEN salary >= 40000 AND salary <= 48000 'Mid'
+                  ELSE 'Low'
+              END AS 'sal_cat'
+              FROM employees;
+
+            - SELECT firstname, salary.
+              CASE
+                  WHEN salary > 0 THEN ROUND(salary*.10)
+              END AS bonus
+              FROM employees;
+
+        Problem:
+            Find how the total count of people according to their
+             salary -- high, mid, low
+
+            SELECT sal_cat, COUNT(emp_id)
+            FROM (
+            SELECT emp_id, salary
+            CASE
+                WHEN salary >= 55000 THEN 'High'
+                WHEN salary >= 40000 AND salary < 55000 THEN 'Mid'
+                ELSE 'LOW'
+            END AS sal_cat
+            FROM employees)
+            AS sub
+            GROUP BY sal_cat;
+
+        SECOND SOLUTION:
+
+            SELECT
+            CASE
+	            WHEN salary >= 55000 THEN 'HIGH'
+	            WHEN salary >= 40000 AND salary <= 54000 THEN 'MID'
+	            ELSE 'LOW'
+            END AS sal_cat, COUNT(emp_id)
+            FROM employees GROUP BY sal_cat;
+
+
+Relationship and it's types:
+    - one to one ex: employee - employee details
+    - one to many ex: employee - employee tasks (he may have many tasks)
+    - many to many ex: books - may have many writers and the writer might have written other books
+
+    1:Many:
+        - Works by connecting the tables with one primary key to another
+          table where it becomes a foreign key and we do the same with
+          mutiple tables.
+
+    FOREIGN KEY:
+        - When a primary key is used in other table to have a relationship
+          with the table.
+
+    EX: Create one table with a primary key.
+        CREATE TABLE customers(
+        cust_id SERIAL PRIMARY KEY,
+        cust_name VARCHAR(100) NOT NULL);
+
+        Create another table now:
+
+        CREATE TABLE orders(
+        ord_id SERIAL PRIMARY KEY,
+        ord_date DATE NOT NULL,
+        price NUMERIC NOT NULL,
+        cust_id INTEGER NOT NULL,
+        FOREIGN KEY(cust_id) REFERENCES
+        customers(cust_id));
+
+        Here the cust_id in the orders is connected to cust_id in customers
+JOINS:
+    Used to combine two or more rows from two or more tables based on a
+    related column between them.
+
+    TYPES:
+        - Cross Join
+            - Every row from one table is combined with every row
+              from another table.
+            - Gives us all the possibilities from tables.
+
+        - Inner Join
+            - Returns only the rows where there is a match between the
+              specified columns in both the left (or first) and right (or second)
+              tables.
+
+        - Left Join
+            - Returns all the rows from the left(first) and matching rows from the
+              right(second).
+
+        - Right Join
+            - Returns all the rows from the right(second) and matching rows from the
+              left(first).
+
+        - Full Outer Join
+
+
+    INNER JOIN:
+        - This doesn't include the rows that doesn't match with the other
+          table.
+
+        - SELECT * FROM customers
+          INNER JOIN orders
+          ON orders.cust_id = customers.cust_id
+
+        - Here only the matching data is shown and avoids all the unwanted
+          data.
+
+        - SELECT * FROM customers c
+          INNER JOIN orders o
+          ON o.cust_id = c.cust_id;
+
+        - GROUP BY USING INNER JOIN:
+            - SELECT c.cust_name, COUNT(o.cust_id) customers c
+              INNER JOIN orders o
+              ON o.cust_id = c.cust_id
+              GROUP BY c.cust_name;
+
+                 cust_name | count
+                -----------+-------
+                 Paul      |     1
+                 Sham      |     2
+                 Raju      |     2
+
+        - Another command can also be used to perform INNER JOIN
+
+          SELECT * FROM customers
+          INNER JOIN orders USING(cust_id);
+
+        - The above code helps us to not to print the Foreign key from
+          the table cause we already have that in the other table and
+          we are using inner join so it prints the primary key from that..
+
+    LEFT JOIN:
+        - Includes all the rows from the left(first) table even if it doesn't match
+          with the right(second) table.
+
+        - SELECT * FROM customers c
+          LEFT JOIN orders o
+          ON o.cust_id = c.cust_id;
+
+        - SELECT * FROM customers c
+          LEFT JOIN orders o USING(cust_id);
+
+        GROUP BY IN LEFT JOIN:
+
+            - SELECT c.cust_name, COUNT(o.cust_id) FROM customers c
+              LEFT JOIN orders o
+              USING(cust_id) GROUP BY c.cust_name;
+
+
+    RIGHT JOIN:
+        - Includes all the rows from the right(second) table even if it doesn't
+          match with the left(first) table.
+
+        - SELECT * FROM customers c
+          RIGHT JOIN orders o
+          ON c.cust_id = o.cust_id;
+
+    FULL OUTER JOIN:
+        - combination of both left and right join
+
+        - SELECT * FROM customers c
+          FULL OUTER JOIN orders o
+          ON o.cust_id = c.cust_id;
+
+        - Print only null values:
+            SELECT * FROM customers c
+            FULL OUTER JOIN orders o
+            ON o.cust_id = c.cust_id;
+
+
+    SELF JOIN:
+        - Joins that are performed within the table.
+        EX:
+            We have multiple employees in the same department and i want
+            them to work to their with their colleagues as group and i have
+            to match them within the table.
+
+            SELECT e1.employee_name employee, e2.employee_name colleague
+            FROM employees e1
+            LEFT JOIN employees e2 ON e1.department_id = e2.department_id;
+
+    CROSS JOIN:
+        - Also known as Cartesian join
+        - It basically lists out all possible combinations
+
+        - SELECT emp_name, dept_name FROM employees
+          CROSS JOIN dept;
+
+
+Many:Many
+    - A table that works in the middle is linking or a junction table.
+
+Views:
+    - it is a temporary table where you can access it easily whenever you
+      want it acts as a function where we can reuse it.
+
+    - CREATE VIEW orders_data AS
+      SELECT c.cust_name, COUNT(o.cust_id) FROM customers c
+      INNER JOIN orders o
+      ON AS c.cust_id = o.cust_id
+      GROUP BY c.cust_name;
+
+    - To access the above code again
+        - simply type
+            - SELECT * FROM orders_data;
+
+    - To view VIEWS:
+        -\dv
+
+Having Clause:
+    - When we use GROUP BY and we want a condition to be applied to it,
+      then we can use
+        HAVING clause
+
+    - SELECT cust_name, SUM(price) FROM orders_data
+      GROUP BY cust_name
+      HAVING sum(price) > 1500
+
+    - HAVING BY ROLLUP
+        - prints us the total of the list in the table.
+          can be used after GROUP BY
+
+    - COALESCE
+        - is a function that returns the first non-null
+          expression from a list of arguments
+        - It usually fills the null values with a default value
+
+        - COALESCE(cust_name, 'TOTAL')
+
+    - SELECT cust_name, SUM(price) FROM orders_data
+      GROUP BY cust_name
+      ROLLUP(cust_name) ORDER BY price;
+
+Stored Procedure: (similar to functions)
+
+    - Where we create to functions to reuse the code that we use for multiple times.
+
+    - For Example we are updating salary of an existing person as he got a hike and many people get hikes we can't waste time by writing the same again and again
+      so, we use the procedures to solve that problem.
+
+    - Create a procedure:
+
+        - CREATE OR REPLACE PROCEDURE procedure_name(parameters datatype, parameters datatype .....)
+          LANGUAGE plpgsql
+          AS $$
+          BEGIN
+          function that we wanna perform;
+          END;
+          $$;
+
+    - Example:
+
+        - CREATE OR REPLACE PROCEDURE update_salary(p_emp_id INT, p_new_salary NUMERIC)
+          LANGUAGE plpgsql
+          AS $$
+          BEGIN
+          UPDATE employees
+          SET salary = p_new_salary
+          WHERE emp_id = p_emp_id;
+          END;
+          $$;
+
+        - The above procedure can update salary of any person at any time instead writing all the code again and again.
+
+    - How to call a procedure
+
+        - CALL procedure_name(values, values, ...);
+
+        - EX:
+            - CALL update_salary(11, 62000);
+            - The above code calls the procedure and updates the table column with the new salary.
+
+    - What if we made a mistake in the procedure
+    - For Example:
+        CREATE OR REPLACE PROCEDURE new_employee(
+        fname VARCHAR(50),
+        lname VARCHAR(50),
+        mail VARCHAR(100),
+        p_dept VARCHAR(50),
+        p_salary NUMERIC
+
+        -- Here i forgot to close the parameters with parenthesis.
+
+        LANGUAGE plpgsql
+        AS $$
+        BEGIN
+        INSERT INTO employees(firstname, lastname, email, dept, salary)
+        VALUES (fname, lname, mail, p_dept, p_salary);
+        END;
+        $$;
+
+        - Now, i wanna change the existing procedure we have to just rewrite
+          it with same command cause we have replace in it
+        - And this works only if the parameters are same
+        - if not we have to DROP the procedure and create a new one.
+
+    - We can also add exceptions in it
+        - BEGIN
+                INSERT INTO employees(firstname, lastname, email, dept, salary)
+                VALUES (fname, lname, mail, p_dept, p_salary);
+          EXCEPTION WHEN unique_violation THEN
+                RAISE NOTICE 'Employee with this email already exists.';
+          END;
+
+User Defined Funcitons:
+    - Custom functions created by the user to perform specific operations and return
+      a value.
+
+    - CREATE OR REPLACE FUNCION function_name(parameters)
+      RETURNS return_type
+      AS $$
+      BEGIN
+        -- Function body (sql statements)
+        RETURN some_value; -- For scalar Functions
+      END;
+      $$ LANGUAGE plpgsql;
+
+    Problem:
+        - Find names of the employees in each department having max salary?
+
+        1st way:
+
+        - sub query:
+            SELECT dept, MAX(salary) FROM employees
+            GROUP BY dept;
+
+        - SELECT e.firstname, e.dept, e.salary FROM employees e
+          JOIN(
+            SELECT dept, MAX(salary) AS max_salary FROM employees
+            GROUP BY dept
+          ) m
+          ON e.dept = m.dept AND e.salary = m.max_salary;
+
+
+        2nd Find the data of each dept separately
+
+        - CREATE OR REPLACE FUNCTION max_salary(dept_name VARCHAR)
+          RETURNS TABLE(emp_id INT, firstname VARCHAR, salary NUMERIC)
+          AS $$
+          BEGIN
+          RETURN QUERY
+          SELECT e.emp_id, e.firstname, e.salary FROM employees
+          WHERE e.dept = dept_name
+          AND e.salary = (
+          SELECT MAX(e.salary) FROM employees emp
+          WHERE emp.dept = emp.name
+          );
+          END;
+          $$ LANGUAGE plpgsql;
+
+
+
+        - 3rd
+
+        CREATE OR REPLACE FUNCTION get_max_salary_per_dept()
+        RETURNS TABLE (
+            firstname VARCHAR,
+            lastname VARCHAR,
+            dept VARCHAR,
+            salary NUMERIC
+        )
+        LANGUAGE plpgsql
+        AS $$
+        BEGIN
+            RETURN QUERY
+            SELECT e.firstname, e.lastname, e.dept, e.salary
+            FROM employees e
+            JOIN (
+                SELECT dept, MAX(salary) AS max_salary
+                FROM employees
+                GROUP BY dept
+            ) max_salaries
+            ON e.dept = max_salaries.dept AND e.salary = max_salaries.max_salary;
+        END;
+        $$;
+
+    To call the functions:
+        - SELECT * FROM get_max_salary_per_dept();
+
+Window Functions:
+    - are also known as analytic functions allows you to perform calculations across a set of
+      rows related to the current row.
+
+    - Defined by OVER() clause.
+
+    - SELECT SUM(salary) OVER() FROM employees;
+    - The above code prints all the rows with total salary in the columns.
+
+    - if we want data to pile up by adding numbers to it.
+
+    - SELECT SUM(salary) OVER(ORDER BY salary) FROM employees;
+
+    - Benefits of Window Functions:
+        Advanced Analytics:
+            - Running totals
+            - Moving averages
+            - Rank calculations
+            - cumulative distributions
+
+        Non-Aggregating:
+            - Unlike aggregate functions (which are basically used beside
+              GROUP BY clause.
+            - Window functions do not collapse rows
+            - So we can calculate aggregates while retaining individual row
+              details.
+
+        Flexibility:
+            - They can be used in various clauses of sql, such as SELECT,
+              ORDER BY, and HAVING providing a lot of flexibility in writing
+              queries.
+
+        Pre-defined functions:
+            - ROW_NUMBER()
+            - RANK()
+            - DENSE_RANK()
+            - LAG()
+            - LEAD()
+
+            - ROW_NUMBER() - basically adds row number
+                - SELECT ROW_NUMER(), OVER(), fname, dept. salary
+                  FROM employees;
+
+                - We can modify the code order it by fname
+                - SELECT ROW_NUMBER(), OVER(ORDER BY fname), fname, dept, salary
+                  FROM employees;
+
+                - Here instead of Group by we can use PARTITION BY
+                  we can use that where we can print data in an order of
+                  something
+                  like dept has hr, finance, it
+                  so it prints finance employees first and hr next etc.
+
+                - SELECT ROW_NUMER(), OVER(PARTITION BY dept), fname, dept, salary
+                  FROM employees;
+
+            - RANK() - to make it work provide criteria.
+                - SELECT fname, salary.
+                  RANK() OVER(ORDER BY salary DESC)
+                  FROM employees;
+
+            - DENSE_RANK() - Deeper criteria
+                - SELECT fname, salary,
+                  DENSE_RANK() OVER(ORDER BY salary DESC)
+                  FROM employees;
+
+            - LAG() - falling behind pattern
+                - SELECT fname, salary
+                  LAG(salary) OVER()
+                  FROM employees;
+
+
+            - LEAD() - being in lead or we can say show us next value or data
+                       but doesn't show the present data.
+                - SELECT fname, salary,
+                  LEAD(salary) OVER()
+                  FROM employees;
+
+CTE (Common Table Expression)
+    - One time use.
+    - we can use it as an alternative for sub query.
+    - is a temporary result set that you can define within a query
+      to simplify complex SQL statements.
+
+    - WITH cte_name (optional_column_list) AS (
+            -- CTE query definition
+            SELECT ...
+      )
+      -- Main query referencing the CTE
+      SELECT ...
+      FROM cte_name
+      WHERE ...;
+
+    - Find the average salary and print the employee names whose
+      salary > the average salary.
+
+    - WITH avg_sal AS(
+      SELECT dept, AVG(salary) as avg_salary FROM employees GROUP BY dept;
+      )
+
+      SELECT
+        e.emp_id, e.fname, e.dept, e.salary, a.avg_salary
+      FROM employees e
+      JOIN
+        avg_sal a ON e.dept = a.dept
+      WHERE e.salary > a.avg_salary;
+
+    - WITH max_sal AS(
+      SELECT dept, MAX(salary) as max_salary FROM employees GROUP BY dept;
+      )
+
+      SELECT
+        e.emp_id, e.fname, e.dept, e.salary, m.max_salary
+      FROM employees e
+      JOIN
+        max_sal m
+        ON e.dept = m.dept
+      WHERE
+        e.salary = m.max_salary
+
+TRIGGERS:
+    - Triggers are special procedure in db that automatically execute
+      predefined actions in response to certain events on a specified table
+      or view.
+    - You need to call them like functions or procedures they run automatically.
+
+    - CREATE TRIGGER trigger_name
+      { BEFORE | AFTER | INSTEAD OF } { INSERT | UPDATE | DELETE | TRUNCATE }
+      ON table_name
+      FOR EACH { ROW | STATEMENT }
+      EXECUTE FUNCTION trigger_function_name();
+
+    - Set up TRIGGERS in Functions:
+
+        - CREATE OR REPLACE FUNCTION func_name()
+          RETURNS TRIGGER
+          AS $$
+          BEGIN
+            -- Statement
+            END IF; -- this is end an if statement in functions.
+            RETURN NEW.something; -- here we're returning the new value.
+          END;
+          $$ LANGUAGE plpgsql;
+
+    - EX:
+        CREATE TRIGGER before_update_sal
+        BEFORE UPDATE ON employees
+        FOR EACH ROW
+        EXECUTE FUNCTION check_salary();
