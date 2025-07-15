@@ -2,7 +2,7 @@
 # # Sets are unordered collections of unique elements.
 # Sets are defined by having values between curly braces {} or by using the set() constructor.
 # Sets are mutable, meaning that you can add or remove items after the set has been created
-# Sets cannout update or change the value of an existing item.
+# Sets cannot update or change the value of an existing item.
 # Sets can be used to perform mathematical operations like union, intersection, and difference.
 # Sets can contain items of different data types, but all items must be hashable.
 
@@ -64,3 +64,26 @@ print("intersection of ss1 and ss2", ss3)
 # another way to perform intersection us using & ampersand operator
 ss4 = ss1 & ss2
 print("intersection using ampersand operator:", ss4)
+
+# difference
+# difference returns all the elements that are not in the set.
+
+# symmetrical difference
+# symmetrical difference returns all the unique elements from both the sets.
+
+ss4 = ss1.symmetric_difference(ss2)
+print("difference of ss1 and ss2", ss4)
+
+# issubset
+# ss1.issubset(ss2)
+
+# boolean -- superset
+# ss1.issuperset(ss2)
+
+# disjoint set
+# is a set where there shouldn't be any matching elements in the both sets
+# ss1.isdisjoint(ss2)
+
+# Frozen set
+a = frozenset({1, 2, 3, 4})
+
