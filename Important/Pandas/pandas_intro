@@ -189,6 +189,9 @@ DataFrames:
         Create a new Column:
             df['promoted salary'] = df['Salary'] * 10
 
+
+        Decide which data that can be replaced and add null as value to the data:
+            (na_values['mention the words that you wanna replace with null'])
 Data Cleaning:
 
     Missing Values:

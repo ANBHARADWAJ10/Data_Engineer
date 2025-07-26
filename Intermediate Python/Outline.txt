@@ -1,0 +1,21 @@
+Lists
+Tuples
+Dictionary
+Sets
+Strings ----- Revision
+Collections
+Itertools
+Lambda Functions
+Exceptions and Errors
+Logging
+JSON
+Random Numbers
+Decorators
+Generators
+Threading vs Multiprocessing
+Multithreading
+Multiprocessing
+Function Arguments
+Shallow vs Deep Copying
+The Asterisk(*) Operator
+Context Managers
